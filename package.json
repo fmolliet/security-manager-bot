@@ -8,7 +8,7 @@
     "deploy": "node src/deploy-commands.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fabio Pedreira Molliet",
   "license": "ISC",
   "description": "",
   "dependencies": {
