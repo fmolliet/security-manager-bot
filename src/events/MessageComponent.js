@@ -12,6 +12,7 @@ module.exports= {
     async execute(interaction) {
         if (!interaction.isMessageComponent()) return;
 
+        // TODO: Desativar as opções após o clique
         console.log(interaction.customId);
         console.log(interaction.component.label);
 

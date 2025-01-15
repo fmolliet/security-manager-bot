@@ -40,6 +40,7 @@ module.exports = {
                 const row = new ActionRowBuilder()
                     .addComponents(cancel, confirm);
 
+                //TODO: Ajustar informações do usuário recebido
                 await approveChannel.send({
                     content: `New registration from <@${userId}>`,
                     embeds: [
