@@ -1,4 +1,6 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, Events, Interaction } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, Events, Interaction } = require("discord.js");
+const DateUtils = require("../utils/DateUtils");
+const constants = require("../config/Constants");
 
 //const { Events } = require("discord.js");
 
@@ -6,33 +8,31 @@ module.exports = {
     name: Events.InteractionCreate,
     /**
      * 
-     * @param {Interaction} interaction 
+     * @param {ModalSubmitInteraction} interaction 
      * @returns 
      */
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
 
         if (interaction.customId === 'registerModal') {
-            await interaction.reply({ content: 'Your submission was received successfully!' });
+            await interaction.reply({ content: 'Recebemos seu registro com sucesso, agora aguarde a aprovação pela staff!' });
 
-            const userId = interaction.member?.user.id
+            // TODO: Grava na base a solicitação do usuário
             const birthDayInput = interaction.fields.getTextInputValue('birthDayInput');
             const fursonaInput = interaction.fields.getTextInputValue('fursonaInput');
             const sourceInput = interaction.fields.getTextInputValue('sourceInput');
-            console.log({ userId, birthDayInput, fursonaInput, sourceInput });
 
-            //TODO: Buscar dinamicamente o canal de aprovação
-            const approveChannel = interaction.guild?.channels.cache.get("1328922027024842852")
+            const approveChannel = interaction.guild?.channels.cache.get(constants.guildApprovalChannelId)
             if (approveChannel?.isTextBased()) {
 
                 const confirm = new ButtonBuilder()
-                    .setCustomId('confirm')
+                    .setCustomId('approveRegistration')
                     .setLabel('Aceitar')
                     .setEmoji("✅")
                     .setStyle(ButtonStyle.Success);
 
                 const cancel = new ButtonBuilder()
-                    .setCustomId('refuse')
+                    .setCustomId('refuseRegistration')
                     .setLabel('Recusar')
                     .setEmoji("⛔")
                     .setStyle(ButtonStyle.Danger);
@@ -40,27 +40,44 @@ module.exports = {
                 const row = new ActionRowBuilder()
                     .addComponents(cancel, confirm);
 
-                //TODO: Ajustar informações do usuário recebido
+                const userId = interaction.member?.user.id
+                console.log({ userId, birthDayInput, fursonaInput, sourceInput });
+
                 await approveChannel.send({
-                    content: `New registration from <@${userId}>`,
+                    content: `Novo registro do usuário <@${userId}>`,
                     embeds: [
                         {
-                            title: 'New Registration',
+                            title: 'Novo registro na portaria',
                             fields: [
                                 {
-                                    name: 'User',
-                                    value: `<@${userId}>`
+                                    name: 'ID',
+                                    value: `${userId}`,
+                                    inline: true
                                 },
                                 {
-                                    name: 'Birthday',
+                                    name: '✏️ Usuário:',
+                                    value: `<@${userId}>`,
+                                    inline: true
+                                },
+                                {
+                                    name: '📅 Conta criada:',
+                                    value: `${DateUtils.format(interaction.member?.user.createdAt)}`,
+                                },
+                                {
+                                    name: '📅 Entrou no servidor:',
+                                    value: `${DateUtils.format(interaction.member?.joinedAt)}`,
+                                    inline: true
+                                },
+                                {
+                                    name: '📅 Data de nascimento:',
                                     value: birthDayInput
                                 },
                                 {
-                                    name: 'Fursona',
+                                    name: '🐺 Fursona:',
                                     value: fursonaInput
                                 },
                                 {
-                                    name: 'Source',
+                                    name: '🛰️ Origem:',
                                     value: sourceInput
                                 }
                             ]

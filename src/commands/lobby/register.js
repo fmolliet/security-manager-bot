@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, Collection, GuildMemberRoleManager, Interaction, ModalActionRowComponentBuilder, Role, SlashCommandBuilder } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
+const PocketBase = require('../../config/PocketBase');
 
 module.exports = {
 
@@ -17,10 +18,15 @@ module.exports = {
 		if (interaction.user.bot) return;
 
 		// Verifica se já está registrado pelas tags
-		if (interaction.member.roles.cache.some((role) => role.name === 'Engineer')) {
-			await interaction.reply('Você já está registrado!');
-			return;
+		for await ( const role of interaction.member.roles.cache) {
+			console.log(role)
+			if (role.name === 'Registrado') {
+				await interaction.reply('Você já está registrado!');
+				return;
+			}
 		}
+		// TODO: Verificar se usuario já abriu uma solicitação de registro
+		console.log(PocketBase.getUserRegistration(interaction.member.id))
 
 		const modal = new ModalBuilder()
 			.setCustomId('registerModal')

@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
+    "start": "node --inspect --watch --experimental-sqlite src/index.js",
     "deploy": "node src/deploy-commands.js"
   },
   "keywords": [],
@@ -15,7 +15,7 @@
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
     "felix-staffer-bot": "file:",
-    "pocketbase": "^0.25.0"
+    "sql-bricks": "^3.0.1"
   },
   "devDependencies": {
     "eslint": "^9.17.0",
