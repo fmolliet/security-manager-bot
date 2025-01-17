@@ -1,6 +1,5 @@
 const { ChatInputCommandInteraction, Collection, GuildMemberRoleManager, Interaction, ModalActionRowComponentBuilder, Role, SlashCommandBuilder } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
-const PocketBase = require('../../config/PocketBase');
 
 module.exports = {
 
@@ -26,7 +25,7 @@ module.exports = {
 			}
 		}
 		// TODO: Verificar se usuario já abriu uma solicitação de registro
-		console.log(PocketBase.getUserRegistration(interaction.member.id))
+		console.log(await database.getUserRegistration("1234"))
 
 		const modal = new ModalBuilder()
 			.setCustomId('registerModal')
