@@ -34,7 +34,6 @@ module.exports = {
 		
 		try {
 			const registrationStatus = await getRegistrationStatus(interaction.user.id);
-			console.log(registrationStatus)
 			if (registrationStatus) {
 				await interaction.reply('Você já se registrou, aguarde a aprovação da staff!');
 				return;

@@ -1,5 +1,6 @@
 const {request}  = require('undici');
 
+const BASE_URL = process.env.FB_SERVICES_URL ?? "http://localhost:8081";
 
 module.exports = {
 
@@ -10,8 +11,7 @@ module.exports = {
      */
     getRegistrationStatus: async (userId) => {
         try {
-            const response = await request(`http://localhost:8081/registration/${userId}/open`);
-            console.log(userId)
+            const response = await request(`${BASE_URL}/registration/${userId}/open`);
             return response.statusCode == 200;
         } catch (error) {
             console.error('Erro ao obter registro do usuário: ', error);
@@ -30,7 +30,7 @@ module.exports = {
      */
     createRegistration: async ( applicantId,   birthday,  specie,  source,  messageId) => {
         try {
-            const response = await request(`http://localhost:8081/registration`, {
+            const response = await request(`${BASE_URL}/registration`, {
                 method: "POST",
                 body: JSON.stringify({
                     applicantId,
@@ -59,7 +59,7 @@ module.exports = {
      */
     updateRegistration: async ( applicantId,  curatorId,  approved) => {
         try {
-            const response = await request(`http://localhost:8081/registration`, {
+            const response = await request(`${BASE_URL}/registration`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     applicantId,
