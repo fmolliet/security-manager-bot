@@ -11,9 +11,11 @@ module.exports = {
      */
     async execute(interaction) {
         if (!interaction.isMessageComponent()) return;
+        if (interaction.user.bot) return;
+        if ( interaction.customId === "openRegistrationModal") return;
         const user = interaction.user
         const updated = interaction.message.embeds[0].data
-        const memberId = updated.fields.find(f => f.name === 'ID').value
+        const memberId  = updated.fields.find(f => f.name === 'ID').value
 
         if (interaction.customId.startsWith('approveRegistration')) {
             updated.fields.push({ name: 'Aprovado por:', value: `<@${user.id}>` });

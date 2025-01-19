@@ -37,7 +37,7 @@ module.exports = {
                     .setEmoji("⛔")
                     .setStyle(ButtonStyle.Danger);
 
-                let row = null;
+                const row = new ActionRowBuilder();
 
                 if ( constants.registeredAltRoleId) {
                     const confirm2 = new ButtonBuilder()
@@ -45,11 +45,9 @@ module.exports = {
                         .setLabel('Aceitar como Non-furry')
                         .setEmoji("👤")
                         .setStyle(ButtonStyle.Primary);
-                        row = new ActionRowBuilder()
-                        .addComponents(cancel, confirm, confirm2);
+                        row.addComponents(cancel, confirm, confirm2);
                 } else {
-                    row = new ActionRowBuilder()
-                    .addComponents(cancel, confirm);
+                    row.addComponents(cancel, confirm);
                 }
 
 
