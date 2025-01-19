@@ -1,5 +1,7 @@
 const { ChatInputCommandInteraction, Collection, GuildMemberRoleManager, Interaction, ModalActionRowComponentBuilder, Role, SlashCommandBuilder } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
+const { getRegistrationStatus } = require('../../api/fbservices');
+const constants = require('../../config/Constants');
 
 module.exports = {
 
@@ -12,20 +14,36 @@ module.exports = {
 	 * @returns 
 	 */
 	async execute(interaction) {
-
-		// verifica se é bot
 		if (interaction.user.bot) return;
+		if ( process.env.REGISTER_CHANNEL_ID && interaction.channelId !== process.env.REGISTER_CHANNEL_ID ) {
+			await interaction.reply('Esse comando só pode ser executado no canal #introducao!');
+			return;
+		}
 
-		// Verifica se já está registrado pelas tags
-		for await ( const role of interaction.member.roles.cache) {
-			console.log(role)
-			if (role.name === 'Registrado') {
-				await interaction.reply('Você já está registrado!');
+		if ( constants.starterRoleId && !interaction.member.roles.cache.has(constants.starterRoleId)){
+			await interaction.reply('Você não tem a tag de membro novo para realizar o registro!');
+			return
+		}
+
+		if (interaction.member.roles.cache.has(constants.registeredRoleId)
+			|| (constants.registeredAltRoleId && interaction.member.roles.cache.has(constants.registeredAltRoleId))) {
+			await interaction.reply('Você já está registrado!');
+			return;
+		}
+		
+		
+		try {
+			const registrationStatus = await getRegistrationStatus(interaction.user.id);
+			console.log(registrationStatus)
+			if (registrationStatus) {
+				await interaction.reply('Você já se registrou, aguarde a aprovação da staff!');
 				return;
 			}
+		} catch (error) {
+			console.error('Erro ao verificar registro do usuário: ', error);
+			await interaction.reply('Erro ao verificar registro do usuário.');
+			return;
 		}
-		// TODO: Verificar se usuario já abriu uma solicitação de registro
-		console.log(await database.getUserRegistration("1234"))
 
 		const modal = new ModalBuilder()
 			.setCustomId('registerModal')

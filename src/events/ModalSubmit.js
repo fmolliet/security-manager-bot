@@ -1,6 +1,7 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, Events, Interaction } = require("discord.js");
 const DateUtils = require("../utils/DateUtils");
 const constants = require("../config/Constants");
+const { createRegistration } = require("../api/fbservices");
 
 //const { Events } = require("discord.js");
 
@@ -17,7 +18,6 @@ module.exports = {
         if (interaction.customId === 'registerModal') {
             await interaction.reply({ content: 'Recebemos seu registro com sucesso, agora aguarde a aprovação pela staff!' });
 
-            // TODO: Grava na base a solicitação do usuário
             const birthDayInput = interaction.fields.getTextInputValue('birthDayInput');
             const fursonaInput = interaction.fields.getTextInputValue('fursonaInput');
             const sourceInput = interaction.fields.getTextInputValue('sourceInput');
@@ -37,14 +37,25 @@ module.exports = {
                     .setEmoji("⛔")
                     .setStyle(ButtonStyle.Danger);
 
-                const row = new ActionRowBuilder()
+                let row = null;
+
+                if ( constants.registeredAltRoleId) {
+                    const confirm2 = new ButtonBuilder()
+                        .setCustomId('approveRegistrationAlt')
+                        .setLabel('Aceitar como Non-furry')
+                        .setEmoji("👤")
+                        .setStyle(ButtonStyle.Primary);
+                        row = new ActionRowBuilder()
+                        .addComponents(cancel, confirm, confirm2);
+                } else {
+                    row = new ActionRowBuilder()
                     .addComponents(cancel, confirm);
+                }
 
-                const userId = interaction.member?.user.id
-                console.log({ userId, birthDayInput, fursonaInput, sourceInput });
+                
 
-                await approveChannel.send({
-                    content: `Novo registro do usuário <@${userId}>`,
+                const userId = interaction.member?.user.id;
+                const approvalMessage = await approveChannel.send({
                     embeds: [
                         {
                             title: 'Novo registro na portaria',
@@ -80,12 +91,19 @@ module.exports = {
                                     name: '🛰️ Origem:',
                                     value: sourceInput
                                 }
-                            ]
+                            ],
+                            color: 0xbd00ff,
+                            timestamp: new Date().toISOString(),
+                            footer: {
+                                text: `${process.env.APP_NAME}`
+                            }
                         }
                     ], components: [
                         row
                     ]
                 });
+
+                await createRegistration( userId, birthDayInput, fursonaInput, sourceInput, approvalMessage.id);
             }
         }
 

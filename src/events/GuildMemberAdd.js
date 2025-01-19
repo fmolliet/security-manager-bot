@@ -18,7 +18,7 @@ module.exports = {
         if (!member.isCommunicationDisabled() ) {
             try { 
                 const dmChannel = await member.createDM(true);
-                dmChannel.send(
+                await dmChannel.send(
                     `Olá ${member.user.username}, bem-vindo(a) ao servidor! Para se registrar, por favor utilize o comando /registrar.`
                 );
             } catch (error){
