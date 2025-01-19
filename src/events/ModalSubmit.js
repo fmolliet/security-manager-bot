@@ -1,6 +1,6 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, Events, Interaction } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, Events } = require("discord.js");
 const DateUtils = require("../utils/DateUtils");
-const constants = require("../config/Constants");
+const constants = require("../config/constants");
 const { createRegistration } = require("../api/fbservices");
 
 //const { Events } = require("discord.js");
@@ -8,9 +8,9 @@ const { createRegistration } = require("../api/fbservices");
 module.exports = {
     name: Events.InteractionCreate,
     /**
-     * 
-     * @param {ModalSubmitInteraction} interaction 
-     * @returns 
+     *
+     * @param {ModalSubmitInteraction} interaction
+     * @returns
      */
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
@@ -52,7 +52,7 @@ module.exports = {
                     .addComponents(cancel, confirm);
                 }
 
-                
+
 
                 const userId = interaction.member?.user.id;
                 const approvalMessage = await approveChannel.send({

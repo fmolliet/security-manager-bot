@@ -1,15 +1,13 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, CommandInteraction, Events, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle } = require("discord.js");
-const constants = require("../config/Constants");
+const { Events, Interaction } = require("discord.js");
+const constants = require("../config/constants");
 const { updateRegistration } = require("../api/fbservices");
-
-//const { Events } = require("discord.js");
 
 module.exports = {
     name: Events.InteractionCreate,
     /**
-     * 
-     * @param {Interaction} interaction 
-     * @returns 
+     *
+     * @param {Interaction} interaction
+     * @returns
      */
     async execute(interaction) {
         if (!interaction.isMessageComponent()) return;
@@ -26,7 +24,7 @@ module.exports = {
                 await interaction.guild.members.cache.get(memberId).roles.add(constants.registeredRoleId)
             }
             await updateRegistration(memberId, user.id, true)
-            
+
         }
 
         if (interaction.customId === 'refuseRegistration') {
@@ -34,7 +32,7 @@ module.exports = {
             await interaction.guild.members.kick(memberId,"Registro recusado na portaria por "+user.username)
             await updateRegistration(memberId, user.id, false)
         }
-        
+
         await interaction.update({ embeds: [updated], components: [] });
     }
 }

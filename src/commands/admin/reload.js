@@ -9,9 +9,9 @@ module.exports = {
 				.setDescription('The command to reload.')
 				.setRequired(true)),
 	/**
-	 * 
-	 * @param {ChatInputCommandInteraction} interaction 
-	 * @returns 
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @returns
 	 */
 	async execute(interaction) {
 		const commandName = interaction.options.getString('command', true).toLowerCase();

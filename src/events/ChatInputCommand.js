@@ -3,9 +3,9 @@ const { Events, Collection, ChatInputCommandInteraction } = require('discord.js'
 module.exports = {
 	name: Events.InteractionCreate,
 	/**
-	 * 
-	 * @param {ChatInputCommandInteraction} interaction 
-	 * @returns 
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @returns
 	 */
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
@@ -16,7 +16,7 @@ module.exports = {
 			console.error(`No command matching ${interaction.commandName} was found.`);
 			return;
 		}
-		
+
 		const { cooldowns } = interaction.client;
 
 		if (!cooldowns.has(command.data.name)) {
@@ -36,7 +36,7 @@ module.exports = {
 				return interaction.reply({ content: `Please wait, you are on a cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true });
 			}
 		}
-		
+
 		timestamps.set(interaction.user.id, now);
 		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 

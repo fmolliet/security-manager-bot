@@ -1,7 +1,7 @@
-const { ChatInputCommandInteraction, Collection, GuildMemberRoleManager, Interaction, ModalActionRowComponentBuilder, Role, SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder } = require('discord.js');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const { getRegistrationStatus } = require('../../api/fbservices');
-const constants = require('../../config/Constants');
+const constants = require('../../config/constants');
 
 module.exports = {
 
@@ -9,9 +9,9 @@ module.exports = {
 		.setName('registrar')
 		.setDescription('Reliza a criação de um registro na portaria!'),
 	/**
-	 * 
-	 * @param {ChatInputCommandInteraction} interaction 
-	 * @returns 
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @returns
 	 */
 	async execute(interaction) {
 		if (interaction.user.bot) return;
@@ -30,8 +30,8 @@ module.exports = {
 			await interaction.reply('Você já está registrado!');
 			return;
 		}
-		
-		
+
+
 		try {
 			const registrationStatus = await getRegistrationStatus(interaction.user.id);
 			if (registrationStatus) {

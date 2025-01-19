@@ -5,8 +5,8 @@ const BASE_URL = process.env.FB_SERVICES_URL ?? "http://localhost:8081";
 module.exports = {
 
     /**
-     * 
-     * @param {string} userId 
+     *
+     * @param {string} userId
      * @returns {Promise<any>}
      */
     getRegistrationStatus: async (userId) => {
@@ -20,12 +20,12 @@ module.exports = {
     },
 
     /**
-     * 
-     * @param {string} applicantId 
-     * @param {string} birthday 
-     * @param {string} specie 
-     * @param {string} source 
-     * @param {string} messageId 
+     *
+     * @param {string} applicantId
+     * @param {string} birthday
+     * @param {string} specie
+     * @param {string} source
+     * @param {string} messageId
      * @returns {Promise<any>}
      */
     createRegistration: async ( applicantId,   birthday,  specie,  source,  messageId) => {
@@ -51,10 +51,10 @@ module.exports = {
     },
 
     /**
-     * 
-     * @param {string} applicantId 
-     * @param {string} curatorId 
-     * @param {boolean} approved 
+     *
+     * @param {string} applicantId
+     * @param {string} curatorId
+     * @param {boolean} approved
      * reti
      */
     updateRegistration: async ( applicantId,  curatorId,  approved) => {
