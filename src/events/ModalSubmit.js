@@ -16,7 +16,7 @@ module.exports = {
         if (!interaction.isModalSubmit()) return;
 
         if (interaction.customId === 'registerModal') {
-            await interaction.reply({ content: 'Recebemos seu registro com sucesso, agora aguarde a aprovação pela staff!' });
+            await interaction.reply({ content: `Recebemos seu registro com sucesso <@${interaction.user.id}>, agora aguarde a aprovação pela staff!` });
 
             const birthDayInput = interaction.fields.getTextInputValue('birthDayInput');
             const fursonaInput = interaction.fields.getTextInputValue('fursonaInput');

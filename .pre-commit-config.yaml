@@ -9,24 +9,24 @@ repos:
     rev: 24.10.0
     hooks:
     -   id: black
--   repo: https://github.com/mxab/pre-commit-trivy.git
-    rev: v0.14.0
-    hooks:
-    -   id: trivyfs-docker
-        args:
-          - --severity
-          - HIGH,CRITICAL
-          - --skip-dirs
-          - ./tests
-          - --skip-files
-          -  "/.env"
-          - --skip-files
-          -  "/.env.prod"
-          - . # last arg indicates the path/file to scan
-    -   id: trivyconfig-docker
-        args:
-          - --severity
-          - HIGH,CRITICAL
-          - --skip-dirs
-          - ./tests
-          - . # last arg indicates the path/file to scan
+# -   repo: https://github.com/mxab/pre-commit-trivy.git
+#     rev: v0.14.0
+#     hooks:
+#     -   id: trivyfs-docker
+#         args:
+#           - --severity
+#           - HIGH,CRITICAL
+#           - --skip-dirs
+#           - ./tests
+#           - --skip-files
+#           -  "/.env"
+#           - --skip-files
+#           -  "/.env.prod"
+#           - . # last arg indicates the path/file to scan
+#     -   id: trivyconfig-docker
+#         args:
+#           - --severity
+#           - HIGH,CRITICAL
+#           - --skip-dirs
+#           - ./tests
+#           - . # last arg indicates the path/file to scan

@@ -15,11 +15,6 @@ module.exports = {
         if (interaction.user.bot) return;
         if ( interaction.customId !== "openRegistrationModal") return;
 
-        if (process.env.GUILD_INTRO_CHANNEL_ID && interaction.channelId !== process.env.GUILD_INTRO_CHANNEL_ID) {
-            await interaction.reply('Esse comando só pode ser executado no canal #introducao!');
-            return;
-        }
-
         if (constants.starterRoleId && !interaction.member.roles.cache.has(constants.starterRoleId)) {
             await interaction.reply('Você não tem a tag de membro novo para realizar o registro!');
             return
@@ -30,7 +25,6 @@ module.exports = {
             await interaction.reply('Você já está registrado!');
             return;
         }
-
 
         try {
             const registrationStatus = await getRegistrationStatus(interaction.user.id);
