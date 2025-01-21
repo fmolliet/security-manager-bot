@@ -14,27 +14,28 @@ module.exports = {
         if (!interaction.isMessageComponent()) return;
         if (interaction.user.bot) return;
         if ( interaction.customId !== "openRegistrationModal") return;
+        const user = interaction.user
 
         if (constants.starterRoleId && !interaction.member.roles.cache.has(constants.starterRoleId)) {
-            await interaction.reply('Você não tem a tag de membro novo para realizar o registro!');
+            await interaction.reply(`<@${user.id}> Você não tem a tag de membro novo para realizar o registro!`);
             return
         }
 
         if (interaction.member.roles.cache.has(constants.registeredRoleId)
             || (constants.registeredAltRoleId && interaction.member.roles.cache.has(constants.registeredAltRoleId))) {
-            await interaction.reply('Você já está registrado!');
+            await interaction.reply(`<@${user.id}> você já está registrado!`);
             return;
         }
 
         try {
-            const registrationStatus = await getRegistrationStatus(interaction.user.id);
+            const registrationStatus = await getRegistrationStatus(user.id);
             if (registrationStatus) {
-                await interaction.reply('Você já se registrou, aguarde a aprovação da staff!');
+                await interaction.reply(`<@${user.id}> você já se registrou, aguarde a aprovação da staff!`);
                 return;
             }
         } catch (error) {
             console.error('Erro ao verificar registro do usuário: ', error);
-            await interaction.reply('Erro ao verificar registro do usuário.');
+            await interaction.reply(`Erro ao verificar registro do usuário: <@${user.id}>, por favor chamar a staff.`);
             return;
         }
 
