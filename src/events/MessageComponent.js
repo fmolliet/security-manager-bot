@@ -19,7 +19,17 @@ module.exports = {
 
         if (interaction.customId.startsWith('approveRegistration')) {
             updated.fields.push({ name: 'Aprovado por:', value: `<@${user.id}>` });
-            if ( constants.starterRoleId ) await interaction.guild.members.cache.get(memberId).roles.remove(constants.starterRoleId)
+            if ( constants.starterRoleId )
+                try {
+                    await interaction.guild.members.removeRole({
+                        user: memberId,
+                        role: constants.starterRoleId,
+                        reason: "Registro aprovado na portaria por " + user.username
+                    });
+                } catch (error) {
+                    console.error(`Erro ao remover starter role do membro ${memberId}: ${error.message}`);
+                }
+
             if ( constants.registeredAltRoleId && interaction.customId === 'approveRegistrationAlt') {
                 await interaction.guild.members.cache.get(memberId).roles.add(constants.registeredAltRoleId)
             } else {
