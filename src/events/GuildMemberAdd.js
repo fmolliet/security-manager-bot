@@ -19,7 +19,7 @@ module.exports = {
             try {
                 const dmChannel = await member.createDM(true);
                 await dmChannel.send(
-                    `Olá ${member.user.username}, bem-vindo(a) ao servidor! Para se registrar, por favor utilize o comando /registrar.`
+                    `Olá ${member.user.username}, bem-vindo(a) ao servidor Furry Brasil 2.0! Para se registrar, por favor clique no botão Registrar no canal <#232658139231682560>.`
                 );
             } catch (error){
                 console.error(`Erro ao enviar mensagem para ${member.user.username}: ${error.message}`)
