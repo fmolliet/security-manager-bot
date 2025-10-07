@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalSubmitInteraction, Events } = require("discord.js");
 const DateUtils = require("../utils/DateUtils");
-const constants = require("../config/constants");
+const constants = require("../config/Constants");
 const { createRegistration } = require("../api/fbservices");
 
 //const { Events } = require("discord.js");

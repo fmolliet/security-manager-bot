@@ -1,7 +1,7 @@
 const { Events, Interaction } = require("discord.js");
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const { getRegistrationStatus } = require('../api/fbservices');
-const constants = require('../config/constants');
+const constants = require('../config/Constants');
 
 module.exports = {
     name: Events.InteractionCreate,

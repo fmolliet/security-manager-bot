@@ -1,5 +1,5 @@
 const { Events, Interaction } = require("discord.js");
-const constants = require("../config/constants");
+const constants = require("../config/Constants");
 const { updateRegistration } = require("../api/fbservices");
 
 module.exports = {

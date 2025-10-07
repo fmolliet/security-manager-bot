@@ -1,5 +1,5 @@
 const { GuildMember, Events, ButtonStyle, ButtonBuilder, ActionRowBuilder} = require("discord.js");
-const constants = require("../config/constants");
+const constants = require("../config/Constants");
 
 //const { Events } = require("discord.js");
 
