@@ -26,6 +26,11 @@ module.exports = {
             }
 
         }
+        try {
+            await member.roles.add(constants.starterRoleId);
+        } catch (error) {
+            console.error(`Erro ao adicionar cargo para ${member.user.username}: ${error.message}`)
+        }
 
         const register = new ButtonBuilder()
             .setCustomId('openRegistrationModal')
